@@ -32,7 +32,7 @@ public class AuthorizationFilterTests {
     @DisplayName("#filter should create the security context")
     void filter() throws Exception {
         ContainerRequestContext request = mock(ContainerRequestContext.class);
-        UserPrincipal userPrincipal = new UserPrincipal("username", "", List.of(), "token");
+        UserPrincipal userPrincipal = new UserPrincipal("username", List.of(), "xxx.yyy.zzz");
         when(request.getHeaders()).thenReturn(new MultivaluedHashMap<>());
         when(authService.validate(any())).thenReturn(userPrincipal);
 

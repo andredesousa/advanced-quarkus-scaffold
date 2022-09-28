@@ -29,7 +29,7 @@ public class AuthResourceTests {
     @DisplayName("#login returns the user session")
     void login() {
         AuthDto auth = new AuthDto("username", "password");
-        UserPrincipal userSession = new UserPrincipal("username", "", List.of(), "xxx.yyy.zzzz");
+        UserPrincipal userSession = new UserPrincipal("username", List.of(), "xxx.yyy.zzzz");
 
         when(authService.login(auth)).thenReturn(userSession);
 
@@ -40,7 +40,7 @@ public class AuthResourceTests {
     @DisplayName("#refresh returns a new token")
     void refresh() {
         String token = "xxx.yyy.zzz";
-        UserPrincipal user = new UserPrincipal("username", "", List.of(), token);
+        UserPrincipal user = new UserPrincipal("username", List.of(), token);
 
         when(authService.refresh("username", List.of())).thenReturn(token);
 

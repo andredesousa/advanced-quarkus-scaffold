@@ -44,7 +44,7 @@ public class AuthService {
 
         if (!isMatch.validFormat || !isMatch.verified) throw new UnauthorizedException();
 
-        return new UserPrincipal(auth.username, "", List.of(), accessToken);
+        return new UserPrincipal(auth.username, List.of(), accessToken);
     }
 
     /**
@@ -75,6 +75,6 @@ public class AuthService {
         String username = claims.getSubject();
         List<String> authorities = (List<String>) claims.get(jwtAuthorities);
 
-        return new UserPrincipal(username, "", authorities, token);
+        return new UserPrincipal(username, authorities, token);
     }
 }

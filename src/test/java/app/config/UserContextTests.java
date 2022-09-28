@@ -21,7 +21,7 @@ public class UserContextTests {
 
     @BeforeEach
     void beforeEach() {
-        user = new UserPrincipal("username", "", List.of("ADMIN"), "xxx.yyy.xxx");
+        user = new UserPrincipal("username", List.of("ADMIN"), "xxx.yyy.xxx");
         ctx = new UserContext(user);
     }
 

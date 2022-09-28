@@ -61,7 +61,7 @@ public class AuthServiceTests {
             "eyJhbGciOiJIUzUxMiJ9." +
             "eyJzdWIiOiJ1c2VybmFtZSIsImlhdCI6MTYzMzc5NDQwMSwiZXhwIjoxOTQ5MTU0NDAxLCJhdXRob3JpdGllcyI6W119." +
             "KR1DBB-ui8ycBhIcRhzOwhcqCNC2DTy5aDYlKeARg1_I0-Aa_KiBHvfZEJbsH4oO3vQxn5yaHmnxtIrlJOtoiQ";
-        UserPrincipal auth = new UserPrincipal("username", "", List.of(), token);
+        UserPrincipal auth = new UserPrincipal("username", List.of(), token);
 
         assertThat(authService.validate("Bearer " + token)).usingRecursiveComparison().isEqualTo(auth);
     }
