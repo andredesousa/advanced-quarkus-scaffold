@@ -1,0 +1,9 @@
+{
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+  "recommendations": [
+    "EditorConfig.EditorConfig",
+    "redhat.vscode-quarkus",
+    "shengchen.vscode-checkstyle",
+    "vscjava.vscode-java-pack"
+  ]
+}

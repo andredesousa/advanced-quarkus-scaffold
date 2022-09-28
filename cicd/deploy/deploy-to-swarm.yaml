@@ -1,0 +1,27 @@
+---
+- name: Deploy Quarkus API
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Deploy to Docker Swarm
+      docker_stack:
+        name: "quarkus-api"
+        state: present
+        compose:
+          - version: "3.7"
+            services:
+              quarkus-api:
+                image: quarkus-api:latest
+                restart: always
+                environment:
+                  - QUARKUS_PROFILE={{ lookup('env', 'QUARKUS_PROFILE') }}
+                  - DB_URL={{ lookup('env', 'DB_URL') }}
+                  - DB_USER={{ lookup('env', 'DB_USER') }}
+                  - DB_PASSWORD={{ lookup('env', 'DB_PASSWORD') }}
+                  - DB_VALIDATE={{ lookup('env', 'DB_VALIDATE') }}
+                  - JWT_SECRET={{ lookup('env', 'JWT_SECRET') }}
+                  - JWT_EXPIRATION={{ lookup('env', 'JWT_EXPIRATION') }}
+                ports:
+                  - "8080:8080"
+        resolve_image: always
