@@ -28,9 +28,9 @@ public class AuthService {
     @Inject
     protected transient UserRepository userRepository;
 
-    private final String jwtAuthorities = "authorities";
+    private final transient String jwtAuthorities = "authorities";
 
-    private final String bearerPrefix = "Bearer ";
+    private final transient String bearerPrefix = "Bearer ";
 
     /**
      * Login method.

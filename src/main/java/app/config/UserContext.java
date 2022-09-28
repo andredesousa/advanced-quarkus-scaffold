@@ -6,7 +6,7 @@ import javax.ws.rs.core.SecurityContext;
 
 public class UserContext implements SecurityContext {
 
-    private UserPrincipal user;
+    private transient UserPrincipal user;
 
     public UserContext(UserPrincipal userPrincipal) {
         user = userPrincipal;

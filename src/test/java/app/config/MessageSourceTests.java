@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @DisplayName("MessageSource")
 @ExtendWith(MockitoExtension.class)
-public class MessageSourceTest {
+public class MessageSourceTests {
 
     @Test
     @DisplayName("#getMessage returns a translated message")

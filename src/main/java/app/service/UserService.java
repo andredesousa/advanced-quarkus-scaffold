@@ -20,7 +20,7 @@ public class UserService {
     @Inject
     protected transient EntityToDtoMapper mapper;
 
-    private final Hasher passwordEncoder = BCrypt.with(BCrypt.Version.VERSION_2B);
+    private final transient Hasher passwordEncoder = BCrypt.with(BCrypt.Version.VERSION_2B);
 
     /**
      * Gets a list of users.

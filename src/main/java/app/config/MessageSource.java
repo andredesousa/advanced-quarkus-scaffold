@@ -8,12 +8,13 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class MessageSource {
 
-    private ResourceBundle resource;
+    private transient ResourceBundle resource;
 
-    private Locale locale;
+    private transient Locale locale;
 
     public String getMessage(String code, Object[] args, Locale locale) {
-        this.resource = this.resource == null || this.locale != locale
+        this.resource =
+            this.resource == null || this.locale != locale
                 ? ResourceBundle.getBundle("i18n.messages", locale)
                 : this.resource;
         this.locale = locale;
