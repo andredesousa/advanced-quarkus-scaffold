@@ -1,24 +1,29 @@
 package app.functional;
 
-import static org.mockito.Mockito.when;
+import static io.restassured.http.ContentType.JSON;
 import static io.restassured.RestAssured.given;
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
+import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
-import app.dto.UserDto;
 import app.entity.User;
 import app.repository.UserRepository;
+import io.quarkus.test.junit.mockito.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.ws.rs.core.HttpHeaders;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 @QuarkusTest
 @DisplayName("Functional Tests")
 public class UserTests {
 
-    @Mock
+    @InjectMock
     transient UserRepository userRepository;
 
     transient String bearerToken =
@@ -29,8 +34,10 @@ public class UserTests {
     @Test
     @DisplayName("/user (GET)")
     void getAllUsers() {
+        when(userRepository.listAll()).thenReturn(List.of());
+
         given()
-            .headers(Map.of(HttpHeaders.AUTHORIZATION, bearerToken))
+            .headers(Map.of(AUTHORIZATION, bearerToken))
             .when().get("/user")
             .then().statusCode(200);
     }
@@ -41,7 +48,7 @@ public class UserTests {
         when(userRepository.findByIdOptional(1L)).thenReturn(Optional.of(new User()));
 
         given()
-            .headers(Map.of(HttpHeaders.AUTHORIZATION, bearerToken))
+            .headers(Map.of(AUTHORIZATION, bearerToken))
             .when().get("/user/1")
             .then().statusCode(200);
     }
@@ -49,10 +56,11 @@ public class UserTests {
     @Test
     @DisplayName("/user (POST)")
     void addUser() {
-        UserDto user = new UserDto(null, "username", "password", "email@email");
+        String user = "{\"username\":\"username\",\"password\":\"12345678\",\"email\":\"string@string.com\"}";
+        doNothing().when(userRepository).persist(any(User.class));
 
         given()
-            .headers(Map.of(HttpHeaders.AUTHORIZATION, bearerToken)).body(user)
+            .headers(Map.of(AUTHORIZATION, bearerToken, CONTENT_TYPE, JSON)).body(user)
             .when().post("/user")
             .then().statusCode(200);
     }
@@ -60,20 +68,24 @@ public class UserTests {
     @Test
     @DisplayName("/user/{id} (PUT)")
     void updateUser() {
-        UserDto user = new UserDto(1L, "username", "password", "email@email");
+        String user = "{\"id\":\"1\",\"username\":\"username\",\"password\":\"12345678\",\"email\":\"string@string.com\"}";
+        when(userRepository.findById(1L)).thenReturn(new User());
+        doNothing().when(userRepository).persist(any(User.class));
 
         given()
-            .headers(Map.of(HttpHeaders.AUTHORIZATION, bearerToken)).body(user)
-            .when().post("/user/1")
+            .headers(Map.of(AUTHORIZATION, bearerToken, CONTENT_TYPE, JSON)).body(user)
+            .when().put("/user/1")
             .then().statusCode(200);
     }
 
     @Test
     @DisplayName("/user/{id} (DELETE)")
     void deleteUser() {
+        when(userRepository.deleteById(1L)).thenReturn(true);
+
         given()
             .headers(Map.of(HttpHeaders.AUTHORIZATION, bearerToken))
             .when().delete("/user/1")
-            .then().statusCode(200);
+            .then().statusCode(204);
     }
 }
