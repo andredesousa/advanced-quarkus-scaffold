@@ -1,7 +1,7 @@
 package app.resource;
 
+import app.config.UserPrincipal;
 import app.dto.AuthDto;
-import app.dto.UserPrincipal;
 import app.service.AuthService;
 import io.quarkus.security.Authenticated;
 import javax.annotation.security.PermitAll;

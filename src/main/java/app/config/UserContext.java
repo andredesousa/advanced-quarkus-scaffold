@@ -1,6 +1,5 @@
 package app.config;
 
-import app.dto.UserPrincipal;
 import java.security.Principal;
 import javax.ws.rs.core.SecurityContext;
 

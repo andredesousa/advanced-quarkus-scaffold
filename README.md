@@ -386,5 +386,6 @@ For further reference, please consider the following sections:
 - [Testing your Quarkus application](https://quarkus.io/guides/getting-started-testing)
 - [Testing Quarkus Applications](https://www.baeldung.com/java-quarkus-testing)
 - [Testcontainers Postgres Module Reference Guide](https://www.testcontainers.org/modules/databases/postgres/)
+- [The Project Lombok](https://medium.com/javarevisited/lets-learn-together-sessions-the-project-lombok-6eaabefa63da)
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.

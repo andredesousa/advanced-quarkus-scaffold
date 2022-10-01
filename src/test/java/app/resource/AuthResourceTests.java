@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 import app.config.UserContext;
+import app.config.UserPrincipal;
 import app.dto.AuthDto;
-import app.dto.UserPrincipal;
 import app.service.AuthService;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ public class AuthResourceTests {
     @DisplayName("#login returns the user session")
     void login() {
         AuthDto auth = new AuthDto("username", "password");
-        UserPrincipal userSession = new UserPrincipal("username", List.of(), "xxx.yyy.zzzz");
+        UserPrincipal userSession = new UserPrincipal(auth.username, "xxx.yyy.zzzz", List.of());
 
         when(authService.login(auth)).thenReturn(userSession);
 
@@ -40,9 +40,9 @@ public class AuthResourceTests {
     @DisplayName("#refresh returns a new token")
     void refresh() {
         String token = "xxx.yyy.zzz";
-        UserPrincipal user = new UserPrincipal("username", List.of(), token);
+        UserPrincipal user = new UserPrincipal("username", token, List.of());
 
-        when(authService.refresh("username", List.of())).thenReturn(token);
+        when(authService.refresh(user.getName(), List.of())).thenReturn(token);
 
         assertThat(authResource.refresh(new UserContext(user))).isEqualTo(token);
     }

@@ -42,6 +42,12 @@ sourceSets {
     }
 }
 
+processResources {
+    filesMatching("**/application.properties") {
+        expand(project.properties)
+    }
+}
+
 dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
@@ -70,6 +76,7 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers:1.17.3'
     testImplementation 'org.testcontainers:junit-jupiter:1.17.3'
 	testImplementation 'org.testcontainers:postgresql:1.17.3'
+    testImplementation 'net.javacrumbs.json-unit:json-unit-assertj:2.35.0'
 }
 
 java {
@@ -97,7 +104,7 @@ checkstyle {
 }
 
 pmd {
-    toolVersion = '6.49.0'
+    toolVersion = '6.50.0'
 }
 
 spotless {

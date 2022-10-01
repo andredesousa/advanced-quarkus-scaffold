@@ -2,7 +2,6 @@ package app.config;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import app.dto.UserPrincipal;
 import java.util.List;
 import javax.ws.rs.core.SecurityContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,7 @@ public class UserContextTests {
 
     @BeforeEach
     void beforeEach() {
-        user = new UserPrincipal("username", List.of("ADMIN"), "xxx.yyy.xxx");
+        user = new UserPrincipal("username", "xxx.yyy.xxx", List.of("ADMIN"));
         ctx = new UserContext(user);
     }
 

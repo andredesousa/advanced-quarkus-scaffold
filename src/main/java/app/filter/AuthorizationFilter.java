@@ -1,8 +1,9 @@
 package app.filter;
 
 import app.config.UserContext;
-import app.dto.UserPrincipal;
+import app.config.UserPrincipal;
 import app.service.AuthService;
+import io.quarkus.logging.Log;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -25,7 +26,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             UserPrincipal user = authService.validate(bearerToken);
             requestContext.setSecurityContext(new UserContext(user));
         } catch (Exception ex) {
-            // TODO
+            Log.info("Unauthenticated User!");
         }
     }
 }

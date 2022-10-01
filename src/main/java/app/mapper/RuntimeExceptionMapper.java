@@ -1,7 +1,7 @@
 package app.mapper;
 
-import app.dto.ErrorResponse;
-import java.util.Date;
+import app.dto.ErrorDto;
+import java.time.LocalDateTime;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -12,8 +12,8 @@ public class RuntimeExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(Exception e) {
-        ErrorResponse error = new ErrorResponse(
-            new Date(),
+        ErrorDto error = new ErrorDto(
+            LocalDateTime.now(),
             Status.INTERNAL_SERVER_ERROR.getStatusCode(),
             Status.INTERNAL_SERVER_ERROR.getReasonPhrase(),
             e.getLocalizedMessage()

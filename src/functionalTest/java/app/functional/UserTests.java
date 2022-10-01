@@ -1,7 +1,7 @@
 package app.functional;
 
-import static io.restassured.http.ContentType.JSON;
 import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static org.mockito.ArgumentMatchers.any;
@@ -10,8 +10,8 @@ import static org.mockito.Mockito.when;
 
 import app.entity.User;
 import app.repository.UserRepository;
-import io.quarkus.test.junit.mockito.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.mockito.InjectMock;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,10 +36,7 @@ public class UserTests {
     void getAllUsers() {
         when(userRepository.listAll()).thenReturn(List.of());
 
-        given()
-            .headers(Map.of(AUTHORIZATION, bearerToken))
-            .when().get("/user")
-            .then().statusCode(200);
+        given().headers(Map.of(AUTHORIZATION, bearerToken)).when().get("/user").then().statusCode(200);
     }
 
     @Test
@@ -47,10 +44,7 @@ public class UserTests {
     void getUserById() {
         when(userRepository.findByIdOptional(1L)).thenReturn(Optional.of(new User()));
 
-        given()
-            .headers(Map.of(AUTHORIZATION, bearerToken))
-            .when().get("/user/1")
-            .then().statusCode(200);
+        given().headers(Map.of(AUTHORIZATION, bearerToken)).when().get("/user/1").then().statusCode(200);
     }
 
     @Test
@@ -60,22 +54,29 @@ public class UserTests {
         doNothing().when(userRepository).persist(any(User.class));
 
         given()
-            .headers(Map.of(AUTHORIZATION, bearerToken, CONTENT_TYPE, JSON)).body(user)
-            .when().post("/user")
-            .then().statusCode(200);
+            .headers(Map.of(AUTHORIZATION, bearerToken, CONTENT_TYPE, JSON))
+            .body(user)
+            .when()
+            .post("/user")
+            .then()
+            .statusCode(200);
     }
 
     @Test
     @DisplayName("/user/{id} (PUT)")
     void updateUser() {
-        String user = "{\"id\":\"1\",\"username\":\"username\",\"password\":\"12345678\",\"email\":\"string@string.com\"}";
+        String user =
+            "{\"id\":\"1\",\"username\":\"username\",\"password\":\"12345678\",\"email\":\"string@string.com\"}";
         when(userRepository.findById(1L)).thenReturn(new User());
         doNothing().when(userRepository).persist(any(User.class));
 
         given()
-            .headers(Map.of(AUTHORIZATION, bearerToken, CONTENT_TYPE, JSON)).body(user)
-            .when().put("/user/1")
-            .then().statusCode(200);
+            .headers(Map.of(AUTHORIZATION, bearerToken, CONTENT_TYPE, JSON))
+            .body(user)
+            .when()
+            .put("/user/1")
+            .then()
+            .statusCode(200);
     }
 
     @Test
@@ -83,9 +84,6 @@ public class UserTests {
     void deleteUser() {
         when(userRepository.deleteById(1L)).thenReturn(true);
 
-        given()
-            .headers(Map.of(HttpHeaders.AUTHORIZATION, bearerToken))
-            .when().delete("/user/1")
-            .then().statusCode(204);
+        given().headers(Map.of(HttpHeaders.AUTHORIZATION, bearerToken)).when().delete("/user/1").then().statusCode(204);
     }
 }

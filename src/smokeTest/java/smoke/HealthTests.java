@@ -1,8 +1,9 @@
 package smoke;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
+import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
+import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -61,9 +62,9 @@ public class HealthTests {
     void healthEndpoint() throws Exception {
         String address = "http://localhost:" + APP_CONTAINER.getMappedPort(8080) + "/health";
         String expected =
-            "{status=UP, components={db={status=UP}, diskSpace={status=UP}, " +
-            "livenessState={status=UP}, ping={status=UP}, readinessState={status=UP}}}";
+            "{\"status\":\"UP\",\"checks\":[{\"name\":\"Database connections health check\"," +
+            "\"status\":\"UP\",\"data\":{\"<default>\":\"UP\"}}]}";
 
-        given().when().get(address).then().statusCode(200).body(is(expected));
+        assertThatJson(given().when().get(address).thenReturn().getBody().asString()).isEqualTo(expected);
     }
 }

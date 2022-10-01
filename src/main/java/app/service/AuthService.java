@@ -1,7 +1,7 @@
 package app.service;
 
+import app.config.UserPrincipal;
 import app.dto.AuthDto;
-import app.dto.UserPrincipal;
 import app.entity.User;
 import app.repository.UserRepository;
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -19,6 +19,10 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @ApplicationScoped
 public class AuthService {
 
+    private static final String jwtAuthorities = "authorities";
+
+    private static final String bearerPrefix = "Bearer";
+
     @ConfigProperty(name = "jwt.secret")
     protected transient String jwtSecret;
 
@@ -28,10 +32,6 @@ public class AuthService {
     @Inject
     protected transient UserRepository userRepository;
 
-    private final transient String jwtAuthorities = "authorities";
-
-    private final transient String bearerPrefix = "Bearer ";
-
     /**
      * Login method.
      * @param auth - The user credentials.
@@ -40,11 +40,12 @@ public class AuthService {
     public UserPrincipal login(AuthDto auth) {
         User user = userRepository.findByUsername(auth.username).orElseThrow(() -> new UnauthorizedException());
         Result isMatch = BCrypt.verifyer().verify(auth.password.toCharArray(), user.getPassword().toCharArray());
-        String accessToken = refresh(user.getUsername(), List.of());
 
-        if (!isMatch.validFormat || !isMatch.verified) throw new UnauthorizedException();
-
-        return new UserPrincipal(auth.username, List.of(), accessToken);
+        if (!isMatch.validFormat || !isMatch.verified) {
+            throw new UnauthorizedException();
+        } else {
+            return new UserPrincipal(auth.username, refresh(user.getUsername(), List.of()), List.of());
+        }
     }
 
     /**
@@ -70,11 +71,11 @@ public class AuthService {
      * @return Authentication object.
      */
     public UserPrincipal validate(String bearerToken) {
-        String token = bearerToken != null ? bearerToken.substring(bearerPrefix.length()) : null;
+        String token = bearerToken != null ? bearerToken.substring(bearerPrefix.length() + 1) : null;
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         String username = claims.getSubject();
         List<String> authorities = (List<String>) claims.get(jwtAuthorities);
 
-        return new UserPrincipal(username, authorities, token);
+        return new UserPrincipal(username, token, authorities);
     }
 }

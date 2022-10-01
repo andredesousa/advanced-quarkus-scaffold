@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import app.config.UserContext;
-import app.dto.UserPrincipal;
+import app.config.UserPrincipal;
 import app.service.AuthService;
 import java.util.List;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -32,7 +32,7 @@ public class AuthorizationFilterTests {
     @DisplayName("#filter should create the security context")
     void filter() throws Exception {
         ContainerRequestContext request = mock(ContainerRequestContext.class);
-        UserPrincipal userPrincipal = new UserPrincipal("username", List.of(), "xxx.yyy.zzz");
+        UserPrincipal userPrincipal = new UserPrincipal("username", "xxx.yyy.zzz", List.of());
         when(request.getHeaders()).thenReturn(new MultivaluedHashMap<>());
         when(authService.validate(any())).thenReturn(userPrincipal);
 

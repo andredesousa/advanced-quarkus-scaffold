@@ -3,9 +3,9 @@ package app.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import app.config.UserPrincipal;
 import app.dto.AuthDto;
 import app.dto.UserDto;
-import app.dto.UserPrincipal;
 import app.mapper.EntityToDtoMapper;
 import app.repository.UserRepository;
 import java.util.List;
@@ -42,8 +42,8 @@ public class AuthServiceTests {
     void login() {
         String password = "$2b$10$jkzR/NI9PCgA3UXhx5T6WOqPJkzhTGAJY/5Z0txIfRt57ThjqfSOe";
         UserDto user = new UserDto(1L, "username", password, "username@email");
-        AuthDto credentials = new AuthDto("username", "admin");
-        when(userRepository.findByUsername(credentials.username)).thenReturn(Optional.of(mapper.userDtoToUser(user)));
+        AuthDto credentials = new AuthDto(user.username, "admin");
+        when(userRepository.findByUsername(user.username)).thenReturn(Optional.of(mapper.userDtoToUser(user)));
 
         assertThat(authService.login(credentials)).isInstanceOf(UserPrincipal.class);
     }
@@ -61,7 +61,7 @@ public class AuthServiceTests {
             "eyJhbGciOiJIUzUxMiJ9." +
             "eyJzdWIiOiJ1c2VybmFtZSIsImlhdCI6MTYzMzc5NDQwMSwiZXhwIjoxOTQ5MTU0NDAxLCJhdXRob3JpdGllcyI6W119." +
             "KR1DBB-ui8ycBhIcRhzOwhcqCNC2DTy5aDYlKeARg1_I0-Aa_KiBHvfZEJbsH4oO3vQxn5yaHmnxtIrlJOtoiQ";
-        UserPrincipal auth = new UserPrincipal("username", List.of(), token);
+        UserPrincipal auth = new UserPrincipal("username", token, List.of());
 
         assertThat(authService.validate("Bearer " + token)).usingRecursiveComparison().isEqualTo(auth);
     }

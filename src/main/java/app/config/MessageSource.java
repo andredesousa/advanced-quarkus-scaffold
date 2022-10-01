@@ -14,9 +14,9 @@ public class MessageSource {
 
     public String getMessage(String code, Object[] args, Locale locale) {
         this.resource =
-            this.resource == null || this.locale != locale
-                ? ResourceBundle.getBundle("i18n.messages", locale)
-                : this.resource;
+            this.resource != null && locale.equals(this.locale)
+                ? this.resource
+                : ResourceBundle.getBundle("i18n.messages", locale);
         this.locale = locale;
 
         return MessageFormat.format(resource.getString(code), args);
