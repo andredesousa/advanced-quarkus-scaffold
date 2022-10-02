@@ -29,7 +29,7 @@ public class AuthResourceTests {
     @DisplayName("#login returns the user session")
     void login() {
         AuthDto auth = new AuthDto("username", "password");
-        UserPrincipal userSession = new UserPrincipal(auth.username, "xxx.yyy.zzzz", List.of());
+        UserPrincipal userSession = new UserPrincipal(auth.getUsername(), "xxx.yyy.zzzz", List.of());
 
         when(authService.login(auth)).thenReturn(userSession);
 

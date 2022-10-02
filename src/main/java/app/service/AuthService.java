@@ -38,13 +38,13 @@ public class AuthService {
      * @return The user details.
      */
     public UserPrincipal login(AuthDto auth) {
-        User user = userRepository.findByUsername(auth.username).orElseThrow(() -> new UnauthorizedException());
-        Result isMatch = BCrypt.verifyer().verify(auth.password.toCharArray(), user.getPassword().toCharArray());
+        User user = userRepository.findByUsername(auth.getUsername()).orElseThrow(() -> new UnauthorizedException());
+        Result isMatch = BCrypt.verifyer().verify(auth.getPassword().toCharArray(), user.getPassword().toCharArray());
 
         if (!isMatch.validFormat || !isMatch.verified) {
             throw new UnauthorizedException();
         } else {
-            return new UserPrincipal(auth.username, refresh(user.getUsername(), List.of()), List.of());
+            return new UserPrincipal(auth.getUsername(), refresh(user.getUsername(), List.of()), List.of());
         }
     }
 

@@ -26,7 +26,9 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             UserPrincipal user = authService.validate(bearerToken);
             requestContext.setSecurityContext(new UserContext(user));
         } catch (Exception ex) {
-            Log.info("Unauthenticated User!");
+            Log.info("Request from unauthenticated user");
+        } finally {
+            Log.infof("Request %s %s", requestContext.getMethod(), requestContext.getUriInfo().getRequestUri());
         }
     }
 }

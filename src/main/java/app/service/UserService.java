@@ -51,7 +51,7 @@ public class UserService {
      */
     public UserDto create(UserDto user) {
         User newUser = mapper.userDtoToUser(user);
-        newUser.setPassword(passwordEncoder.hashToString(10, user.password.toCharArray()));
+        newUser.setPassword(passwordEncoder.hashToString(10, user.getPassword().toCharArray()));
         userRepository.persist(newUser);
 
         return mapper.userToUserDto(newUser);
@@ -64,10 +64,10 @@ public class UserService {
      * @return The updated user.
      */
     public UserDto update(Long id, UserDto user) {
-        User updatedUser = userRepository.findByIdOptional(user.id).orElseThrow(() -> new NotFoundException());
-        updatedUser.setUsername(user.username);
-        updatedUser.setPassword(passwordEncoder.hashToString(10, user.password.toCharArray()));
-        updatedUser.setEmail(user.email);
+        User updatedUser = userRepository.findByIdOptional(user.getId()).orElseThrow(() -> new NotFoundException());
+        updatedUser.setUsername(user.getUsername());
+        updatedUser.setPassword(passwordEncoder.hashToString(10, user.getPassword().toCharArray()));
+        updatedUser.setEmail(user.getEmail());
         userRepository.persist(updatedUser);
 
         return mapper.userToUserDto(updatedUser);

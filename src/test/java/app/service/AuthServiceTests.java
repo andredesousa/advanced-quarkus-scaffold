@@ -42,8 +42,8 @@ public class AuthServiceTests {
     void login() {
         String password = "$2b$10$jkzR/NI9PCgA3UXhx5T6WOqPJkzhTGAJY/5Z0txIfRt57ThjqfSOe";
         UserDto user = new UserDto(1L, "username", password, "username@email");
-        AuthDto credentials = new AuthDto(user.username, "admin");
-        when(userRepository.findByUsername(user.username)).thenReturn(Optional.of(mapper.userDtoToUser(user)));
+        AuthDto credentials = new AuthDto(user.getUsername(), "admin");
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(mapper.userDtoToUser(user)));
 
         assertThat(authService.login(credentials)).isInstanceOf(UserPrincipal.class);
     }

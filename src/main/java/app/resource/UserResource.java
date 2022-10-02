@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -34,14 +35,14 @@ public class UserResource {
 
     @POST
     @Transactional
-    public UserDto create(@Valid UserDto user) {
+    public UserDto create(@NotNull @Valid UserDto user) {
         return userService.create(user);
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public UserDto update(@PathParam("id") Long id, @Valid UserDto user) {
+    public UserDto update(@PathParam("id") Long id, @NotNull @Valid UserDto user) {
         return userService.update(id, user);
     }
 

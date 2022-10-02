@@ -7,6 +7,7 @@ import io.quarkus.security.Authenticated;
 import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
@@ -21,7 +22,7 @@ public class AuthResource {
     @POST
     @Path("/login")
     @PermitAll
-    public UserPrincipal login(@Valid AuthDto auth) {
+    public UserPrincipal login(@NotNull @Valid AuthDto auth) {
         return authService.login(auth);
     }
 

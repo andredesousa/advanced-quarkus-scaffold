@@ -50,7 +50,7 @@ public class UserTests {
     @Test
     @DisplayName("/user (POST)")
     void addUser() {
-        String user = "{\"username\":\"username\",\"password\":\"12345678\",\"email\":\"string@string.com\"}";
+        String user = "{\"username\":\"username\",\"password\":\"12345678\",\"email\":\"user@api.com\"}";
         doNothing().when(userRepository).persist(any(User.class));
 
         given()
@@ -65,9 +65,8 @@ public class UserTests {
     @Test
     @DisplayName("/user/{id} (PUT)")
     void updateUser() {
-        String user =
-            "{\"id\":\"1\",\"username\":\"username\",\"password\":\"12345678\",\"email\":\"string@string.com\"}";
-        when(userRepository.findById(1L)).thenReturn(new User());
+        String user = "{\"id\":\"1\",\"username\":\"username\",\"password\":\"12345678\",\"email\":\"user@api.com\"}";
+        when(userRepository.findByIdOptional(1L)).thenReturn(Optional.of(new User()));
         doNothing().when(userRepository).persist(any(User.class));
 
         given()
