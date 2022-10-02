@@ -44,8 +44,7 @@ public class UserServiceTests {
     @Test
     @DisplayName("#findById returns an user")
     void findById() {
-        Optional<User> user = Optional.of(new User());
-        when(userRepository.findByIdOptional(1L)).thenReturn(user);
+        when(userRepository.findByIdOptional(1L)).thenReturn(Optional.of(new User()));
 
         assertThat(userService.findById(1L)).isInstanceOf(UserDto.class);
     }
@@ -62,7 +61,7 @@ public class UserServiceTests {
     @DisplayName("#update returns an updated user")
     void updateUser() {
         UserDto user = new UserDto(1L, "username", "password", "email@email");
-        when(userRepository.findById(1L)).thenReturn(new User());
+        when(userRepository.findByIdOptional(1L)).thenReturn(Optional.of(new User()));
 
         assertThat(userService.update(1L, user)).isInstanceOf(UserDto.class);
     }

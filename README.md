@@ -101,6 +101,8 @@ The next tasks should be executed in a console inside the root directory:
 
 - `./gradlew tasks` - Displays the tasks runnable from root project 'quarkus-app'.
 - `./gradlew quarkusDev` - Runs this project with background compilation.
+- `./gradlew quarkusTest` - Enables continuous testing without starting dev mode.
+- `./gradlew quarkusBuild` - Quarkus builds a runner jar based on the build jar.
 - `./gradlew check` - Runs all checks.
 - `./gradlew test` - Runs the unit tests.
 - `./gradlew functionalTest` - Run the functional tests.
@@ -190,7 +192,7 @@ public class Resource {
 
     @GET
     @Path("/404")
-    public String notFound(@Context Locale locale) {
+    public String notFound(@HeaderParam(HttpHeaders.ACCEPT_LANGUAGE) Locale locale) {
         return messageSource.getMessage("http.status.404", null, locale);
     }
 }
@@ -371,10 +373,8 @@ For further reference, please consider the following sections:
 - [Official Gradle documentation](https://docs.gradle.org)
 - [Quarkus QuickStarts](https://github.com/quarkusio/quarkus-quickstarts)
 - [Creating your first application](https://quarkus.io/guides/getting-started)
-- [building a native executable](https://quarkus.io/guides/building-native-image)
 - [Writing JSON REST services](https://quarkus.io/guides/rest-json)
 - [Build a REST API from the ground up with Quarkus](https://developers.redhat.com/articles/2022/02/03/build-rest-api-ground-quarkus-20)
-- [Contexts and Dependency Injection](https://quarkus.io/guides/cdi-reference)
 - [Simplified Hibernate ORM with Panache](https://quarkus.io/guides/hibernate-orm-panache)
 - [Error Handling and Error Page in Quarkus](https://marcelkliemannel.com/articles/2021/centralized-error-handling-and-a-custom-error-page-in-quarkus/)
 - [Java Localization - Formatting Messages](https://www.baeldung.com/java-localization-messages-formatting)
@@ -387,5 +387,6 @@ For further reference, please consider the following sections:
 - [Testing Quarkus Applications](https://www.baeldung.com/java-quarkus-testing)
 - [Testcontainers Postgres Module Reference Guide](https://www.testcontainers.org/modules/databases/postgres/)
 - [The Project Lombok](https://medium.com/javarevisited/lets-learn-together-sessions-the-project-lombok-6eaabefa63da)
+- [Building a native executable](https://quarkus.io/guides/building-native-image)
 
 If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.

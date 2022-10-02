@@ -29,8 +29,9 @@ public class AuthResource {
     @Path("/refresh")
     @Authenticated
     public String refresh(@Context SecurityContext ctx) {
-        UserPrincipal user = (UserPrincipal) ctx.getUserPrincipal();
-
-        return authService.refresh(user.getName(), user.getAuthorities());
+        return authService.refresh(
+            ctx.getUserPrincipal().getName(),
+            ((UserPrincipal) ctx.getUserPrincipal()).getAuthorities()
+        );
     }
 }

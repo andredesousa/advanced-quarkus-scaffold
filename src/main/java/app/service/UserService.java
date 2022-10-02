@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class UserService {
@@ -63,7 +64,7 @@ public class UserService {
      * @return The updated user.
      */
     public UserDto update(Long id, UserDto user) {
-        User updatedUser = userRepository.findById(user.id);
+        User updatedUser = userRepository.findByIdOptional(user.id).orElseThrow(() -> new NotFoundException());
         updatedUser.setUsername(user.username);
         updatedUser.setPassword(passwordEncoder.hashToString(10, user.password.toCharArray()));
         updatedUser.setEmail(user.email);

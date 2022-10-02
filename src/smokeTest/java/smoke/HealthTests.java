@@ -1,9 +1,8 @@
 package smoke;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.get;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-import io.restassured.response.Response;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -65,6 +64,6 @@ public class HealthTests {
             "{\"status\":\"UP\",\"checks\":[{\"name\":\"Database connections health check\"," +
             "\"status\":\"UP\",\"data\":{\"<default>\":\"UP\"}}]}";
 
-        assertThatJson(given().when().get(address).thenReturn().getBody().asString()).isEqualTo(expected);
+        assertThatJson(get(address).thenReturn().getBody().asString()).isEqualTo(expected);
     }
 }
