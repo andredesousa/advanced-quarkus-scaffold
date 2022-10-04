@@ -35,7 +35,7 @@ public class AuthService {
     /**
      * Login method.
      * @param auth - The user credentials.
-     * @return The user details.
+     * @return The user principal.
      */
     public UserPrincipal login(AuthDto auth) {
         User user = userRepository.findByUsername(auth.getUsername()).orElseThrow(() -> new UnauthorizedException());
@@ -68,7 +68,7 @@ public class AuthService {
     /**
      * Validates the token.
      * @param bearerToken - The bearer token string.
-     * @return Authentication object.
+     * @return The user principal.
      */
     public UserPrincipal validate(String bearerToken) {
         String token = bearerToken != null ? bearerToken.substring(bearerPrefix.length() + 1) : null;

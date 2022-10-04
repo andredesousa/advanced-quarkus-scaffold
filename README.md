@@ -211,6 +211,7 @@ It includes [Prettier](https://prettier.io/), [Checkstyle](https://checkstyle.so
 
 Use `./gradlew lint` to analyze your code. Many problems can be automatically fixed with `./gradlew format` command.
 Depending on our editor, you may want to add an editor extension to lint and format your code while you type or on-save.
+These checks are supplemented with [SonarQube](https://www.sonarqube.org/) and other tools.
 
 ## Running unit tests
 
@@ -248,6 +249,7 @@ See the [Test filtering](https://docs.gradle.org/current/userguide/java_testing.
 ## Running smoke tests
 
 Smoke Testing is a technique to verify the critical functionalities of a software.
+
 Use `./gradlew smokeTest` to execute the smoke tests via [JUnit 5](https://junit.org/junit5/) and [Testcontainers](https://www.testcontainers.org/).
 Use `./gradlew smokeTest -t` to keep executing your tests while watching for file changes in the background.
 You can see the HTML report opening the [index.html](build/reports/tests/smokeTest/index.html) file in your web browser.
@@ -275,7 +277,7 @@ To ensure you have a significant load, you can use [Postman](https://www.postman
 
 Quarkus supports you with readiness/liveness health checks via [SmallRye Health](https://github.com/smallrye/smallrye-health/).
 Monitoring your app, gathering metrics, understanding traffic, or the state of your database is trivial with this dependency.
-It is available at <http://localhost:8080/q/health>.
+It is available at <http://localhost:8080/health>.
 A service, or a component of your infrastructure (e.g., Kubernetes) checks this address continuously.
 Depending on the HTTP status code returned from a GET request to this address the service will take action when it receives an "unhealthy" response.
 
@@ -307,8 +309,8 @@ You can easily switch this project to use native executable.
 Building a native executable requires using a distribution of **GraalVM**.
 
 Code conventions are base rules that allow the creation of a uniform code base across an organization.
-[Checkstyle](https://checkstyle.sourceforge.io/) is very popular and recommended.
-These checks are supplemented with [SonarQube](https://www.sonarqube.org/) and other tools.
+*Checkstyle* is very popular and recommended.
+These checks are supplemented with *PMD*, *SpotBugs*, *SonarQube* and other tools.
 
 ## Commit messages convention
 
@@ -358,7 +360,7 @@ You can create a native executable via GraalVM using:
 ./gradlew build -Dquarkus.package.type=native
 ```
 
-You can then execute your native executable with: `./build/quarkus-app-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./build/quarkus-app-0.1.0-SNAPSHOT-runner`
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/gradle-tooling>.
 
 This project contains a Dockerfile that you can use to build your Docker image. Use `./gradlew buildImage` after `build` command.
