@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mockStatic;
 
 import app.dto.ErrorDto;
+import io.quarkus.logging.Log;
 import java.time.LocalDateTime;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.core.Response;
@@ -21,6 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class RuntimeExceptionMapperTests {
 
+    static MockedStatic<Log> logs;
+
     static MockedStatic<LocalDateTime> date;
 
     @InjectMocks
@@ -28,13 +31,9 @@ public class RuntimeExceptionMapperTests {
 
     @BeforeAll
     static void beforeAll() {
+        logs = mockStatic(Log.class);
         date = mockStatic(LocalDateTime.class);
         date.when(() -> LocalDateTime.now()).thenReturn(null);
-    }
-
-    @AfterAll
-    static void afterAll() {
-        date.close();
     }
 
     @Test
@@ -45,5 +44,11 @@ public class RuntimeExceptionMapperTests {
         assertThat(mapper.toResponse(new InternalServerErrorException()))
             .usingRecursiveComparison()
             .isEqualTo(Response.status(Status.INTERNAL_SERVER_ERROR).entity(error).build());
+    }
+
+    @AfterAll
+    static void afterAll() {
+        logs.close();
+        date.close();
     }
 }

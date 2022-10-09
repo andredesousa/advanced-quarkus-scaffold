@@ -14,17 +14,21 @@ import java.util.List;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.UriInfo;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @DisplayName("AuthorizationFilter")
 @ExtendWith(MockitoExtension.class)
 public class AuthorizationFilterTests {
+
+    static MockedStatic<Log> logs;
 
     @Mock
     transient AuthService authService;
@@ -34,7 +38,7 @@ public class AuthorizationFilterTests {
 
     @BeforeAll
     static void beforeAll() {
-        mockStatic(Log.class);
+        logs = mockStatic(Log.class);
     }
 
     @Test
@@ -50,5 +54,10 @@ public class AuthorizationFilterTests {
 
         verify(authService).validate(any());
         verify(request).setSecurityContext(any(UserContext.class));
+    }
+
+    @AfterAll
+    static void afterAll() {
+        logs.close();
     }
 }

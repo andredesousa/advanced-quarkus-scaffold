@@ -34,11 +34,6 @@ public class ErrorResponseFilterTests {
         date.when(() -> LocalDateTime.now()).thenReturn(null);
     }
 
-    @AfterAll
-    static void afterAll() {
-        date.close();
-    }
-
     @Test
     @DisplayName("#filter returns 404 error")
     void filter() throws Exception {
@@ -50,5 +45,10 @@ public class ErrorResponseFilterTests {
         errorFilter.filter(null, response);
 
         verify(response).setEntity(new ErrorDto(null, 404, "Not Found", "Not Found"));
+    }
+
+    @AfterAll
+    static void afterAll() {
+        date.close();
     }
 }
