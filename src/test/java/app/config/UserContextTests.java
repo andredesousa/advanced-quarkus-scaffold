@@ -33,19 +33,19 @@ public class UserContextTests {
     @Test
     @DisplayName("#isUserInRole returns true for 'ADMIN' role")
     void isUserInRole() {
-        assertThat(ctx.isUserInRole("ADMIN")).isEqualTo(true);
+        assertThat(ctx.isUserInRole("ADMIN")).isTrue();
     }
 
     @Test
     @DisplayName("#isUserInRole returns false for 'OTHER' role")
     void isUserOutRole() {
-        assertThat(ctx.isUserInRole("OTHER")).isEqualTo(false);
+        assertThat(ctx.isUserInRole("OTHER")).isFalse();
     }
 
     @Test
     @DisplayName("#isSecure returns false for HTTP")
     void isSecure() {
-        assertThat(ctx.isSecure()).isEqualTo(false);
+        assertThat(ctx.isSecure()).isFalse();
     }
 
     @Test

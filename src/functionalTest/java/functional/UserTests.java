@@ -1,4 +1,4 @@
-package app.functional;
+package functional;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;

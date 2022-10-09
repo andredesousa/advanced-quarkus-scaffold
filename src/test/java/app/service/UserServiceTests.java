@@ -1,6 +1,7 @@
 package app.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +48,7 @@ public class UserServiceTests {
         when(userRepository.findByIdOptional(1L)).thenReturn(Optional.of(new User()));
 
         assertThat(userService.findById(1L)).isInstanceOf(UserDto.class);
+        verify(mapper).userToUserDto(any(User.class));
     }
 
     @Test
@@ -55,6 +57,7 @@ public class UserServiceTests {
         UserDto user = new UserDto(null, "username", "password", "email@email");
 
         assertThat(userService.create(user)).isInstanceOf(UserDto.class);
+        verify(mapper).userToUserDto(any(User.class));
     }
 
     @Test
@@ -64,6 +67,7 @@ public class UserServiceTests {
         when(userRepository.findByIdOptional(1L)).thenReturn(Optional.of(new User()));
 
         assertThat(userService.update(1L, user)).isInstanceOf(UserDto.class);
+        verify(mapper).userToUserDto(any(User.class));
     }
 
     @Test

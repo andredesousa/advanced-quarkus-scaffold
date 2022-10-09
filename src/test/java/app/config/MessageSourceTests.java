@@ -13,11 +13,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 public class MessageSourceTests {
 
     @Test
-    @DisplayName("#getMessage returns a translated message")
-    void getMessage() {
-        MessageSource messageSource = new MessageSource();
-        String message = messageSource.getMessage("http.status.404", null, Locale.US);
+    @DisplayName("#getMessage returns a translated message for default locale")
+    void getEnglishMessage() {
+        String message = new MessageSource().getMessage("http.status.404", null, Locale.getDefault());
 
         assertThat(message).isEqualTo("Not Found");
+    }
+
+    @Test
+    @DisplayName("#getMessage returns a translated message for Germany locale")
+    void getGermanMessage() {
+        String message = new MessageSource().getMessage("http.status.404", null, Locale.GERMANY);
+
+        assertThat(message).isEqualTo("Nicht Gefunden");
     }
 }

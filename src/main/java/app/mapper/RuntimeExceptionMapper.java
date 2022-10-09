@@ -14,15 +14,7 @@ public class RuntimeExceptionMapper implements ExceptionMapper<Exception> {
     @Override
     public Response toResponse(Exception ex) {
         if (ex instanceof ClientErrorException) {
-            ClientErrorException exception = (ClientErrorException) ex;
-            ErrorDto error = new ErrorDto(
-                LocalDateTime.now(),
-                exception.getResponse().getStatusInfo().getStatusCode(),
-                exception.getResponse().getStatusInfo().getReasonPhrase(),
-                exception.getLocalizedMessage()
-            );
-
-            return Response.status(exception.getResponse().getStatus()).entity(error).build();
+            return ((ClientErrorException) ex).getResponse();
         } else {
             ErrorDto error = new ErrorDto(
                 LocalDateTime.now(),

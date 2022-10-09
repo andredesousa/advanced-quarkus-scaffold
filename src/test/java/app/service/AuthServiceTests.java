@@ -45,7 +45,9 @@ public class AuthServiceTests {
         AuthDto credentials = new AuthDto(user.getUsername(), "admin");
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(mapper.userDtoToUser(user)));
 
-        assertThat(authService.login(credentials)).isInstanceOf(UserPrincipal.class);
+        assertThat(authService.login(credentials))
+            .extracting(UserPrincipal::getName, UserPrincipal::getAuthorities)
+            .isEqualTo(List.of(user.getUsername(), List.of()));
     }
 
     @Test
