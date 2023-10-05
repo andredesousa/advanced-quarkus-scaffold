@@ -16,7 +16,7 @@ plugins {
     id 'org.sonarqube' version '3.4.0.2513'
     id 'pl.allegro.tech.build.axion-release' version '1.14.1'
     id 'ru.netris.commitlint' version '1.4.1'
-    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.73.0'
+    id 'se.bjurr.gitchangelog.git-changelog-gradle-plugin' version '1.79.0'
     id 'checkstyle'
     id 'jacoco'
     id 'java'
